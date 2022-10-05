@@ -1,7 +1,6 @@
 import 'package:api_1/shopapi/model/shopModel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../provider/shopprovider.dart';
 
 class shopFirst_Screen extends StatefulWidget {
@@ -12,37 +11,39 @@ class shopFirst_Screen extends StatefulWidget {
 }
 
 class _shopFirst_ScreenState extends State<shopFirst_Screen> {
-   var shopapiT;
-   var shopapiF;
+   shop_Provider? shopapiT;
+   shop_Provider? shopapiF;
   @override
   Widget build(BuildContext context) {
     shopapiF = Provider.of<shop_Provider>(context, listen: false);
     shopapiT = Provider.of<shop_Provider>(context, listen:true);
+
         return SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.cyanAccent,
             centerTitle: false,
             title: Text("amazon.in",style: TextStyle(color: Colors.black),),
             actions: [
               IconButton(onPressed:(){
-                shopapiF.shopapifactory();
+                shopapiF!.shopapifactory();
               }, icon: Icon(Icons.history,color: Colors.black,)),
 
 
               PopupMenuButton(itemBuilder: (context){
                 return[
                   PopupMenuItem(onTap: (){
-                     shopapiF.filterprice();
+                     shopapiF!.filterprice();
                   },
                     child: Text("\$0-49 price",style: TextStyle(fontSize: 20),),
                   ),
                   PopupMenuItem(onTap: (){
-                    shopapiF.filterpricetwo();
+                    shopapiF!.filterpricetwo();
                   },
                     child: Text("\$50-99 price",style: TextStyle(fontSize: 20)),
                   ),
                   PopupMenuItem(onTap: (){
-                    shopapiF.filterpricethree();
+                    shopapiF!.filterpricethree();
                   },
                     child: Text("\$100-Upto price",style: TextStyle(fontSize: 20)),
                   ),
@@ -51,29 +52,33 @@ class _shopFirst_ScreenState extends State<shopFirst_Screen> {
             ],
           ),
           body: Center(
-            child: FutureBuilder(
+            child: FutureBuilder<List>(
                 future: Provider.of<shop_Provider>(context, listen: false).shopapifactory(),
                 builder: (context, snapshot) {
                   if (snapshot.hasError)
                   {
                     return Text('${snapshot.error}');
                   }
+
                   else if (snapshot.hasData)
                   {
-                    List  i1 = snapshot.data!;
+                    if(shopapiF!.mainList.isEmpty)
+                      {
+                        shopapiF!.updateList(snapshot.data!);
+                      }
                     return GridView.builder(
                               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                              itemCount: i1.length,
+                              itemCount: shopapiT!.mainList.length,
                               itemBuilder:(context,index){
                                 return InkWell(onTap: (){
-                                  shopapiF.Datapick = ShopModel(
-                                    category: i1[index].category,
-                                    description: i1[index].description,
-                                    id: i1[index].id,
-                                    image: i1[index].image,
-                                    price: i1[index].price,
-                                    rating:i1[index].rating,
-                                    title: i1[index].title);
+                                  shopapiF!.Datapick = ShopModel(
+                                    category: shopapiF!.mainList[index].category,
+                                    description: shopapiF!.mainList[index].description,
+                                    id: shopapiF!.mainList[index].id,
+                                    image: shopapiF!.mainList[index].image,
+                                    price: shopapiF!.mainList[index].price,
+                                    rating:shopapiF!.mainList[index].rating,
+                                    title: shopapiF!.mainList[index].title);
                                     Navigator.pushNamed(context,'shoptwo');
                                 },
                                   child: Container(
@@ -82,13 +87,13 @@ class _shopFirst_ScreenState extends State<shopFirst_Screen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Container(margin: EdgeInsets.all(5),height: 115,width: 85,child: Image.network('${i1[index].image}')),
+                                            Container(margin: EdgeInsets.all(5),height: 115,width: 85,child: Image.network('${shopapiT!.mainList[index].image}')),
                                             Column(
                                               children: [
-                                                Container(margin:EdgeInsets.all(5),child: Text("${i1[index].price}\$")),
+                                                Container(margin:EdgeInsets.all(5),child: Text("${shopapiT!.mainList[index].price}\$")),
                                                 Row(
                                                   children: [
-                                                    Text("${i1[index].rating.rate} "),
+                                                    Text("${shopapiT!.mainList[index].rating.rate} "),
                                                     Icon(Icons.star,size: 13,color: Colors.amberAccent,),
                                                   ],
                                                 )
@@ -96,7 +101,7 @@ class _shopFirst_ScreenState extends State<shopFirst_Screen> {
                                             ),
                                           ],
                                         ),
-                                        Container(margin: EdgeInsets.only(top: 7,left: 7,right: 7),child: Text("${i1[index].title}",overflow:TextOverflow.ellipsis)),
+                                        Container(margin: EdgeInsets.only(top: 7,left: 7,right: 7),child: Text("${shopapiT!.mainList[index].title}",overflow:TextOverflow.ellipsis)),
                                       ],
                                     ),
                                   ),

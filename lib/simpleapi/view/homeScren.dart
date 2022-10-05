@@ -20,14 +20,14 @@ class _newjsonhome_ScreenState extends State<newjsonhome_Screen> {
     return SafeArea(
         child: Scaffold(
       body: Center(
-        child: FutureBuilder(
+        child: FutureBuilder<List>(
             future: Provider.of<Products_ProviderNew>(context, listen: false)
                 .apifactory(),
             builder: (context, snapshot) {
               if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               } else if (snapshot.hasData) {
-                List<dynamic> l1 = snapshot.data!;
+                List l1 = snapshot.data!;
                 return Expanded(
                   child: ListView.builder(
                     itemCount: l1.length,

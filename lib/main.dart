@@ -12,7 +12,7 @@ void main(){
       MultiProvider(
         providers: [
           ListenableProvider<Products_ProviderNew>(create: (context)=>Products_ProviderNew()),
-          ListenableProvider<shop_Provider>(create: (context)=>shop_Provider()),
+          ListenableProvider<shop_Provider>(create:(context)=>shop_Provider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

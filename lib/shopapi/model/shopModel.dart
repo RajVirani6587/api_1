@@ -71,8 +71,6 @@ ShopModel copyWith({  num? id,
 
 }
 
-/// rate : 3.9
-/// count : 120
 
 class Rating {
   Rating({
