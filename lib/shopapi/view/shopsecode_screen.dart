@@ -1,4 +1,3 @@
-import 'dart:html';
 
 import 'package:api_1/shopapi/provider/shopprovider.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +23,11 @@ class _shopsecode_ScreenState extends State<shopsecode_Screen> {
           iconTheme: IconThemeData(color: Colors.black),
           backgroundColor: Colors.cyanAccent,
           centerTitle: false,
-          title: Text("Product Detile",style: TextStyle(color: Colors.black),),
+          title: Text("Product Detail",style: TextStyle(color: Colors.black),),
         ),
         body: Column(
           children: [
            Container(
-             alignment: Alignment.topLeft,
              margin: EdgeInsets.all(10),
             height: 300,
             width: 300,
@@ -37,10 +35,11 @@ class _shopsecode_ScreenState extends State<shopsecode_Screen> {
           ),
             Row(
               children: [
-                Container(margin: EdgeInsets.all(8),child: Text("${apiproviderf!.Datapick!.id}] Product :-")),
-                Text("${apiproviderf!.Datapick!.title}",overflow: TextOverflow.ellipsis,style: TextStyle(fontWeight: FontWeight.bold),),
+                Container(margin: EdgeInsets.only(top: 8,left: 8,right: 8),child: Text("${apiproviderf!.Datapick!.id}] Product :-")),
               ],
             ),
+            Container(margin: EdgeInsets.all(10),child: Text("${apiproviderf!.Datapick!.title}",style: TextStyle(fontWeight: FontWeight.bold),)),
+
             SizedBox(height: 4,),
             Row(
               children: [
@@ -51,7 +50,7 @@ class _shopsecode_ScreenState extends State<shopsecode_Screen> {
                 SizedBox(width: 8,),
                 Row(
                   children: [
-                    Text("${apiproviderf!.Datapick!.rating!.rate}"),
+                    Text("${apiproviderf!.Datapick!.rating!.rate}",style: TextStyle(fontWeight: FontWeight.bold),),
                     Icon(Icons.star,color: Colors.amber,size: 13,),
                   ],
                 )
@@ -72,22 +71,28 @@ class _shopsecode_ScreenState extends State<shopsecode_Screen> {
             Row(
               children: [
                 Container(margin: EdgeInsets.all(8),child: Text("4] description :-")),
-                Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("${apiproviderf!.Datapick!.description}",),
-                      ),
-                    ),
-                  ],
+              ],
+            ),
+            Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 15,right: 15),
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Text("${apiproviderf!.Datapick!.description}",),
                 ),
               ],
             ),
+
+            Row(
+              children: [
+                Container(margin: EdgeInsets.all(8),child: Text("5] comments :-")),
+                Text("${apiproviderf!.Datapick!.rating!.count}",style: TextStyle(fontWeight: FontWeight.bold),)
+              ],
+            )
 
           ],
         ),
